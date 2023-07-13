@@ -1,0 +1,67 @@
+CREATE TABLE CUSTOMERS(
+    id INT PRIMARY KEY,
+    name VARCHAR(100),
+    email VARCHAR(100),
+    address VARCHAR(255),
+    phone_number VARCHAR(50)
+);
+
+INSERT INTO CUSTOMERS(id,name,email,adsress,phone_umber) VA LUES(1,'Dilip Sanap','dilipsanap@gmail.com','Nimgaon-Sinnar,Sinnar,Nashik','9175329907'),
+(2,'Ganesh Sanap','ganeshsanap@gmail.com','Nimgaon-Sinnar,Sinnar,Nashik','9175329907'),
+(3,'Indu Sanap','indusanap@gmail.com','Nimgaon-Sinnar,Sinnar,Nashik','9175329907'),
+(4,'Barku Sanap','barkusanap@gmail.com','Nimgaon-Sinnar,Sinnar,Nashik','9175329907'),
+(5,'Dhanu Sanap','dhanusanap@gmail.com','Nimgaon-Sinnar,Sinnar,Nashik','9175329907')
+
+
+
+**(3) Write a query to fetch all data from the Customers table / collection.
+
+SELECT * FROM CUSTOMERS
+
+**(4) Write a query to select only the name and email fields for all customers.
+
+SELECT NAME,EMAIL FROM CUSTOMERS
+
+**(5) Write a query to fetch the customer with the id of 3.
+
+SELECT * FROM CUSTOMERS WHERE ID=3
+
+**(6)  Write a query to fetch all customers whose name starts with 'A'.
+
+SELECT * FROM CUSTOMERS WHERE NAME LIKE 'A%'
+
+**(7)  Write a query to fetch all customers, ordered by name in descending order.
+
+SELECT * FROM CUSTOMERS ORDER BY NAME desc 
+
+**(8) Write a query to update the address of the customer with id 4.
+
+UPDATE CUSTOMERS SET address = "NIMGAON-SINNAR,TALUKA-SINNAR,DIST-NASSHIK" WHERE ID = 4;
+
+**(9) Write a query to fetch the top 3 customers when ordered by id in ascending order.
+
+SELECT * FROM CUSTOMERS ORDER BY ID ASC LIMIT 3;
+
+**(10)  Write a query to delete the customer with id 2.
+
+DELETE FROM CUSTOMERS WHERE ID=2
+
+**(11) Write a query to count the number of customers.
+
+SELECT COUNT(CUSTOMERS.ID) FROM CUSTOMERS
+
+**(12) Write a query to fetch all customers except the first two when ordered by **`id`** in ascending order.
+
+SELECT * FROM CUSTOMERS ORDER BY ID ASC OFFSET 2
+
+**(13) Write a query to fetch all customers whose id is greater than 2 and name starts with 'B'.
+
+SELECT * FROM CUSTOMERS WHERE ID>2 AND NAME LIKE 'B%'
+
+**(14) Write a query to fetch all customers whose id is less than 3 or name ends with 's'.
+
+SELECT * FROM CUSTOMERS WHERE ID<3 AND NAME LIKE '%s'
+
+**(15) Write a query to fetch all customers where the phone_number field is not set or is null.
+
+SELECT * FROM CUSTOMERS WHERE phone_number="" OR phone_number=NULL
