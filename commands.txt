@@ -65,3 +65,168 @@ SELECT * FROM CUSTOMERS WHERE ID<3 AND NAME LIKE '%s'
 **(15) Write a query to fetch all customers where the phone_number field is not set or is null.
 
 SELECT * FROM CUSTOMERS WHERE phone_number="" OR phone_number=NULL
+
+**(16)  Create a Restaurants table / collection with the fields defined above.
+
+CREATE TABLE Restaurants(
+    id INT PRIMARY KEY,
+    name VARCHAR(100),
+    cuisine_type VARCHAR(100),
+    location VARCHAR(255),
+    average_rating DECIMAL(3,2),
+    delivery_available BOOLEAN
+
+)
+
+**(17) Insert five rows / documents into the Restaurants table / collection with data of your choice.
+INSERT INTO Restaurants(id,name,cuisine_type,location,average_rating,delivery_available) VA LUES(
+    (1,'Bharat Restaurants','Indian','canada corner',4.00,TRUE),
+    (2,'Thai Restaurants','Thai','canada corner',4.00,TRUE),
+    (3,'Chiniese Restaurants','Chiniese','canada corner',4.00,TRUE),
+    (4,'French Restaurants','French','canada corner',4.00,TRUE),
+    (5,'Continental Restaurants','Continental','canada corner',4.00,TRUE),
+)
+
+
+**(18) Write a query to fetch all restaurants, ordered by average_rating in descending order.
+
+SELECT * FROM Restaurants
+
+**(19) Write a query to fetch all restaurants that offer delivery_available and have an average_rating of more than 4.
+
+SELECT * FROM Restaurants WHERE delivery_available=TRUE AND average_rating>4;
+
+**(20) Write a query to fetch all restaurants where the cuisine_type field is not set or is null.
+SELECT * FROM Restaurants WHERE cuisine_type='' OR cuisine_type=NULL;
+
+**(21) Write a query to count the number of restaurants that have delivery_available.
+
+SELECT COUNT(*) FROM Restaurants WHERE delivery_available=TRUE;
+
+**(22) Write a query to fetch all restaurants whose location contains 'New York'.
+
+SELECT * FROM Restaurants WHERE location='NEW YORK'
+
+**(23)  Write a query to calculate the average average_rating of all restaurants.
+
+SELECT AVG(average_rating) from Restaurants
+
+**(24) Write a query to fetch the top 5 restaurants when ordered by average_rating in descending order.
+
+SELECT id,name,cuisine_type,location,average_rating,delivery_available FROM Restaurants ORDER BY average_rating DESC LIMIT 5;
+
+**(25) Write a query to delete the restaurant with id 3.
+
+DELETE FROM Restaurants WHERE ID=3
+
+**(26)  Create a Rides table / collection with the fields defined above.
+
+CREATE TABLE Rides(
+    id INT PRIMARY KEY,
+    driver_id INT,
+    passenger_id INT,
+    start_location VARCHAR(255),
+    end_location VARCHAR(255),
+    distance DECIMAL(5,2),
+    ride_time DECIMAL(5,2),
+    fare DECIMAL(6,2)
+);
+
+**(27) Insert five rows / documents into the Rides table / collection with data of your choice.
+
+INSERT INTO Rides(id,driver_id,passenger_id,start_location,end_location,distance,ride_time,fare) VA LUES(
+    (1,123,234,'abc','cde',12.22,0.15,200),
+    (2,124,234,'abc','cde',12.22,0.15,200),
+    (3,125,234,'abc','cde',12.22,0.15,200),
+    (4,126,234,'abc','cde',12.22,0.15,200),
+    (5,127,234,'abc','cde',12.22,0.15,200),
+);
+
+** (28)  Write a query to fetch all rides, ordered by fare in descending order.
+
+SELECT * FROM Rides ORDER BY FARE DESC;
+
+**(29)  Write a query to calculate the total distance and total fare for all rides.
+
+SELECT SUM(DISTANCE) AS TOTAL_DISTANCE, SUM(FARE) AS TOTAL FARE FROM Rides;
+
+**(30) Write a query to calculate the average ride_time of all rides.
+
+SELECT AVG(ride_time) AS AVGRIDETIME FROM Rides;
+
+**(31) Write a query to fetch all rides whose start_location or end_location contains 'Downtown'.
+
+SELECT * FROM Rides WHERE start_location='Downtown' OR end_location='Downtown'
+
+**(32) Write a query to count the number of rides for a given driver_id.
+
+SELECT COUNT(driver_id) FROM Rides 
+
+**(33) Write a query to update the fare of the ride with id 4.
+
+UPDATE Rides SET FARE=300 WHERE ID=4
+
+**(34)  Write a query to calculate the total fare for each driver_id.
+
+SELECT driver_id, SUM(fare) AS total_fare FROM Rides GROUP BY driver_id;
+
+**(35)  Write a query to delete the ride with id 2.
+
+DECIMAL FROM Rides WHERE ID=4
+
+** (36) Write a query to find the ride with the highest and lowest fare.
+
+SELECT MAX(FARE) AS HIGHERST_FARE ,MIN(FARE) AS LOWEST_FARE FROM Rides
+
+**(37)  Write a query to find the average fare and distance for each driver_id
+
+SELECT driver_id,AVG(FARE) AS AVG_FARE , AVG(DISTANCE) AS avg_distance FROM Rides GROUP BY driver_id;
+
+**(38)  Write a query to find driver_id that have completed more than 5 rides.
+
+select driver_id, count(driver_id) as total_rides from Rides  group by driver_id having(driver_id)>5;
+
+**(39)Assuming there is another collection/table called Drivers with driver_id and name fields, write a query to find the name of the driver with the highest fare.
+
+select name,MAX(fare)
+from Drivers
+join Rides on Drivers.driver_id=Rides.driver_id
+GROUP BY name; 
+
+**(40) Write a query to find the top 3 drivers who have earned the most from fares. Return the drivers' ids and total earnings.
+
+select driver_id,sum(fare) as total_earning
+from Rides
+GROUP BY driver_id
+ORDER by total_earning DESC
+LIMIT 3
+
+**(41) Assuming there's a ride_date field of date type in the Rides table / collection, write a query to find all rides that happened in the last 7 days.
+SELECT * 
+FROM Rides
+where ride_date>=DATE_SUB(CURDATE(),INTERVAL7 DAY)
+AND ride_date<=CURDATE();
+
+**(42) Write a query to find all rides where the end_location is not set.
+
+SELECT *
+FROM Rides
+WHERE end_location IS NULL;
+
+**(43) Write a query to calculate the fare per mile for each ride and return the ride ids and their fare per mile, ordered by fare per mile in descending order.
+
+SELECT id, fare / distance AS fare_per_mile
+FROM Rides
+ORDER BY fare_per_mile DESC;
+
+**(44) Assuming there's another collection/table Passengers with passenger_id and name fields, write a query to return a list of all rides including the driver's name and passenger's name.
+
+SELECT Drivers.name AS driver_name, Passengers.name AS passenger_name
+FROM Rides
+JOIN Passengers ON Rides.passenger_id = Passengers.passenger_id
+JOIN Drivers ON Rides.driver_id = Drivers.driver_id; 
+
+**(45) Write a query to add a tip field to the Rides table / collection.
+
+ALTER TABLE Rides
+ADD COLUMN tip DECIMAL(6,2);
